@@ -1,26 +1,213 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Light Theme (default) */
+:root,
+.light {
+  --background: #FCFCFC;
+  --foreground: #1A1A1A;
+  --card-bg: #FFFFFF;
+  --card-border: #e5e5e5;
+  --muted: #737373;
+  --muted-bg: #f5f5f5;
+  --nav-bg: rgba(252, 252, 252, 0.95);
+  --nav-text: #1A1A1A;
+  --footer-bg: #1A1A1A;
+  --footer-text: #FCFCFC;
+}
+
+/* Dark Theme */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #FCFCFC;
+  --card-bg: #171717;
+  --card-border: #262626;
+  --muted: #a3a3a3;
+  --muted-bg: #262626;
+  --nav-bg: rgba(10, 10, 10, 0.95);
+  --nav-text: #FCFCFC;
+  --footer-bg: #171717;
+  --footer-text: #FCFCFC;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-muted: var(--muted);
+  --color-muted-bg: var(--muted-bg);
+  --font-sans: var(--font-inter);
+  --font-brand: var(--font-inter);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Dopamine Palette */
+  --color-sun-yellow: #FFD233;
+  --color-lava-orange: #FF6B35;
+  --color-berry-pink: #EF476F;
+  --color-mint-teal: #06D6A0;
+  --color-sky-blue: #118AB2;
+  --color-salt-cyan: #4CC9F0;
+  --color-snack-white: #FCFCFC;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #FF6B35 #FCFCFC;
+  overflow-x: hidden;
+  padding-bottom: 7rem;
+  /* Space for bottom menu */
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal {
+  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes blob {
+
+  0%,
+  100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+
+  34% {
+    border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+  }
+
+  67% {
+    border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+  }
+}
+
+.animate-blob {
+  animation: blob 7s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .mix-blend-multiply {
+    mix-blend-mode: multiply;
+    /* Force tan backgrounds to pure white for perfect blending on colored sections */
+    filter: brightness(1.15) contrast(1.1);
+  }
+
+  @keyframes float-spin {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-20px) rotate(180deg);
+    }
+
+    100% {
+      transform: translateY(0) rotate(360deg);
+    }
+  }
+
+  .animate-float-spin {
+    animation: float-spin 10s linear infinite;
+  }
+}
+
+/* Base Responsive Fixes */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.75rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .section-spacing {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .mobile-stack {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .mobile-gap {
+    gap: 3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.25rem !important;
+  }
 }
