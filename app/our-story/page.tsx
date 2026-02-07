@@ -33,7 +33,7 @@ const TIMELINE = [
 
 export default function OurStoryPage() {
     return (
-        <main className="min-h-screen bg-stone-950 text-white selection:bg-sun-yellow selection:text-stone-900">
+        <main className="min-h-screen bg-background text-foreground transition-colors duration-300 selection:bg-sun-yellow selection:text-stone-900">
             <Navbar />
 
             {/* Heritage Hero */}

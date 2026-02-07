@@ -139,7 +139,7 @@ export default function Navbar() {
             className="p-2 text-stone-700 dark:text-stone-300 hover:text-lava-orange transition-colors rounded-full hover:bg-stone-100 dark:hover:bg-stone-800"
             title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
           >
-            {theme === "light" ? <Moon size={22} /> : <Sun size={22} />}
+            {theme === "light" ? <Sun size={22} /> : <Moon size={22} />}
           </button>
 
           {/* Wishlist Icon */}

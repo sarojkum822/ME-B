@@ -38,11 +38,11 @@ const FLAVORS = [
 
 export default function FlavorGuidePage() {
     return (
-        <main className="min-h-screen bg-snack-white text-stone-900 selection:bg-mint-teal selection:text-stone-900">
+        <main className="min-h-screen bg-background text-foreground transition-colors duration-300 selection:bg-mint-teal selection:text-stone-900">
             <Navbar />
 
             {/* Guide Hero */}
-            <section className="pt-40 pb-20 px-6 text-center bg-stone-950 text-white overflow-hidden relative">
+            <section className="pt-40 pb-20 px-6 text-center bg-stone-950 dark:bg-stone-900 text-white overflow-hidden relative">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-mint-teal/10 rounded-full blur-[100px]" />
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-lava-orange/10 rounded-full blur-[100px]" />
 

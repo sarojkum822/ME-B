@@ -24,7 +24,7 @@ export default function WishlistPage() {
     };
 
     return (
-        <main className="min-h-screen bg-stone-950 text-white">
+        <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
             <Navbar />
 
             <section className="pt-40 pb-32 px-6">

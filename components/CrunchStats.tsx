@@ -1,28 +1,35 @@
 "use client";
 
-const stats = [
-    { label: "Crunch Factor", value: "100%", unit: "Pure", color: "text-lava-orange" },
-    { label: "Plant Protein", value: "9", unit: "Grams", color: "text-berry-pink" },
-    { label: "Guilt Level", value: "0%", unit: "None", color: "text-mint-teal" },
-    { label: "Flavor Burst", value: "MAX", unit: "Intense", color: "text-sun-yellow" },
+const trustCards = [
+    { label: "High Protein", description: "9g of plant-based power per pack.", icon: "💪", color: "bg-lava-orange" },
+    { label: "Wood-Fire Roasted", description: "Never fried, always perfectly crunchy.", icon: "🔥", color: "bg-sun-yellow" },
+    { label: "Under 100 Cal", description: "The perfect guilt-free snack buddy.", icon: "⚖️", color: "bg-mint-teal" },
+    { label: "No Palm Oil", description: "Made with heart-healthy ingredients.", icon: "🌿", color: "bg-berry-pink" },
 ];
 
 export default function CrunchStats() {
     return (
-        <section className="bg-stone-900 py-16 px-6 overflow-hidden">
+        <section className="bg-white dark:bg-stone-950 py-24 px-6 relative overflow-hidden">
             <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-                    {stats.map((stat, i) => (
-                        <div key={i} className="text-center group">
-                            <h3 className={`text-5xl md:text-7xl font-brand font-black mb-2 transition-transform duration-500 group-hover:scale-110 ${stat.color}`}>
-                                {stat.value}
+                <div className="text-center mb-16">
+                    <span className="text-lava-orange font-brand font-black text-sm uppercase tracking-[0.3em] mb-4 block animate-reveal">Why Mithila Essence?</span>
+                    <h2 className="text-4xl md:text-6xl font-brand font-black uppercase text-stone-900 dark:text-white leading-[0.9] tracking-tighter">
+                        Smart Snacking. <br /> <span className="text-stone-400">Pure Tradition.</span>
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {trustCards.map((card, i) => (
+                        <div key={i} className="group bg-stone-50 dark:bg-stone-900 p-8 rounded-[2.5rem] border-4 border-stone-900 dark:border-stone-800 hover:bg-stone-900 hover:text-white transition-all duration-500">
+                            <div className={`${card.color} w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-lg border-2 border-stone-900 group-hover:scale-110 transition-transform`}>
+                                {card.icon}
+                            </div>
+                            <h3 className="text-2xl font-brand font-black uppercase mb-2 tracking-tight">
+                                {card.label}
                             </h3>
-                            <p className="text-stone-400 font-brand font-bold text-sm uppercase tracking-[0.2em] mb-1">
-                                {stat.label}
+                            <p className="text-stone-500 group-hover:text-stone-300 font-medium leading-snug">
+                                {card.description}
                             </p>
-                            <span className="text-stone-600 font-medium text-xs uppercase tracking-widest">
-                                {stat.unit}
-                            </span>
                         </div>
                     ))}
                 </div>

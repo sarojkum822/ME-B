@@ -81,19 +81,19 @@ export default function WhyMakhana() {
                                 {comparison.map((item, index) => (
                                     <tr
                                         key={index}
-                                        className={`border-b border-stone-100 ${index === 0 ? 'bg-mint-teal/10' : 'hover:bg-stone-50'}`}
+                                        className={`border-b border-stone-100 dark:border-stone-700/50 ${index === 0 ? 'bg-mint-teal/10 dark:bg-mint-teal/5' : 'hover:bg-stone-50 dark:hover:bg-stone-700/30'}`}
                                     >
-                                        <td className={`px-6 py-4 font-brand font-bold ${index === 0 ? 'text-mint-teal' : 'text-stone-700'}`}>
+                                        <td className={`px-6 py-4 font-brand font-bold ${index === 0 ? 'text-mint-teal' : 'text-stone-700 dark:text-stone-300'}`}>
                                             {item.snack}
                                         </td>
-                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600'}`}>
+                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600 dark:text-stone-400'}`}>
                                             {item.calories}
                                         </td>
-                                        <td className="px-6 py-4 text-center text-stone-600">{item.protein}</td>
-                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600'}`}>
+                                        <td className="px-6 py-4 text-center text-stone-600 dark:text-stone-400">{item.protein}</td>
+                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600 dark:text-stone-400'}`}>
                                             {item.fat}
                                         </td>
-                                        <td className="px-6 py-4 text-center text-stone-600">{item.fiber}</td>
+                                        <td className="px-6 py-4 text-center text-stone-600 dark:text-stone-400">{item.fiber}</td>
                                         <td className={`px-6 py-4 text-center font-brand font-bold ${index === 0 ? 'text-mint-teal' : 'text-lava-orange'}`}>
                                             {item.verdict}
                                         </td>

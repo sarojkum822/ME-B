@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import FlavorSections from "@/components/FlavorSections";
@@ -6,13 +9,20 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import CrunchStats from "@/components/CrunchStats";
 import HeritageStory from "@/components/HeritageStory";
+import ShopQuick from "@/components/ShopQuick";
 
 export default function Home() {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <main className="min-h-screen relative bg-snack-white dark:bg-stone-950">
       {/* Global Artisanal Particles - Background Layer */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-10">
-        {[...Array(20)].map((_, i) => (
+        {mounted && [...Array(20)].map((_, i) => (
           <div
             key={i}
             className="absolute animate-float-spin"
@@ -51,8 +61,9 @@ export default function Home() {
         </section>
 
         <CrunchStats />
-        <HeritageStory />
         <FlavorSections />
+        <ShopQuick />
+        <HeritageStory />
         <Testimonials />
         <FAQ />
 

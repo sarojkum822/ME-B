@@ -44,10 +44,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setThemeState(newTheme);
     };
 
-    // Prevent flash of incorrect theme
-    if (!mounted) {
-        return null;
-    }
+    // Always render children to support SSR and prevent hydration mismatches
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>

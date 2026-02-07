@@ -19,7 +19,7 @@ export default function AccountPage() {
     if (!user) return null;
 
     return (
-        <main className="min-h-screen bg-stone-950 text-white selection:bg-mint-teal selection:text-stone-900">
+        <main className="min-h-screen bg-background text-foreground transition-colors duration-300 selection:bg-mint-teal selection:text-stone-900">
             <Navbar />
 
             <section className="pt-40 pb-32 px-6">

@@ -34,9 +34,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${outfit.variable} ${fredoka.variable} ${inter.variable} antialiased font-sans pb-32 lg:pb-0`}
+        suppressHydrationWarning
       >
         <Providers>
           {children}

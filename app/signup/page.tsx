@@ -22,7 +22,7 @@ export default function SignupPage() {
     };
 
     return (
-        <main className="min-h-screen bg-stone-50 dark:bg-stone-950 transition-colors">
+        <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
             <Navbar />
             <div className="pt-32 pb-20 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl shadow-xl p-8 border border-stone-100 dark:border-stone-800">

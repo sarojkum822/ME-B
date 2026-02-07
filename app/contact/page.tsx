@@ -79,8 +79,8 @@ export default function ContactPage() {
                     </div>
 
                     {/* Form Side */}
-                    <div className="flex-1 bg-stone-900 p-12 lg:p-16 rounded-[3rem] text-white shadow-2xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-sun-yellow/5 rounded-full blur-[80px]" />
+                    <div className="flex-1 bg-white dark:bg-stone-900 p-12 lg:p-16 rounded-[3rem] text-stone-900 dark:text-white shadow-2xl relative overflow-hidden border border-stone-100 dark:border-stone-800/50">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-sun-yellow/5 dark:bg-sun-yellow/5 rounded-full blur-[80px]" />
 
                         {isSubmitted ? (
                             <div className="relative z-10 flex flex-col items-center justify-center h-full py-20 animate-reveal">
@@ -88,41 +88,41 @@ export default function ContactPage() {
                                     <Check size={40} className="text-stone-900" />
                                 </div>
                                 <h3 className="text-3xl font-brand font-black uppercase mb-4">Message Sent!</h3>
-                                <p className="text-stone-400 text-center">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+                                <p className="text-stone-500 dark:text-stone-400 text-center">Thanks for reaching out. We'll get back to you within 24 hours.</p>
                             </div>
                         ) : (
                             <form className="relative z-10 space-y-8" onSubmit={handleSubmit}>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-500">Your Full Name</label>
+                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-400 dark:text-stone-500">Your Full Name</label>
                                     <input
                                         type="text"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         placeholder="e.g. Rahul Sharma"
                                         required
-                                        className="w-full bg-transparent border-b-2 border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-700"
+                                        className="w-full bg-transparent border-b-2 border-stone-100 dark:border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-300 dark:placeholder:text-stone-700"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-500">Email Address</label>
+                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-400 dark:text-stone-500">Email Address</label>
                                     <input
                                         type="email"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         placeholder="rahul@example.com"
                                         required
-                                        className="w-full bg-transparent border-b-2 border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-700"
+                                        className="w-full bg-transparent border-b-2 border-stone-100 dark:border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-300 dark:placeholder:text-stone-700"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-500">How can we help?</label>
+                                    <label className="text-[10px] font-brand font-black uppercase tracking-widest text-stone-400 dark:text-stone-500">How can we help?</label>
                                     <textarea
                                         rows={4}
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                         placeholder="Tell us about your makhana cravings..."
                                         required
-                                        className="w-full bg-transparent border-b-2 border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-700 resize-none"
+                                        className="w-full bg-transparent border-b-2 border-stone-100 dark:border-stone-800 py-3 focus:outline-none focus:border-mint-teal transition-colors text-xl font-bold placeholder:text-stone-300 dark:placeholder:text-stone-700 resize-none"
                                     />
                                 </div>
 

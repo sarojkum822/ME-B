@@ -32,7 +32,7 @@ export default function ProductGrid({ filter = "all", isShopPage = false }: Prod
                     <Link
                         href={`/product/${product.id}`}
                         key={product.id}
-                        className="group flex flex-col bg-white dark:bg-card-bg hover:shadow-xl transition-all duration-300 border border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 overflow-hidden relative rounded-lg"
+                        className="group flex flex-col bg-white dark:bg-card-bg hover:shadow-xl transition-all duration-300 border border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 overflow-hidden relative rounded-[10px]"
                     >
                         {/* Wishlist transitions */}
                         <button
