@@ -7,31 +7,37 @@ import Footer from "@/components/Footer";
 import ProductFilters from "@/components/ProductFilters";
 import ProductGrid from "@/components/ProductGrid";
 import { ChevronRight, Filter, ArrowUpDown, X, Check } from "lucide-react";
+import { PRODUCTS } from "@/lib/products";
 
 export default function ShopPage() {
+    const filteredProductsCount = PRODUCTS.length;
     const [activeFilter, setActiveFilter] = useState("all");
     const [activeSort, setActiveSort] = useState("popularity");
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
 
     return (
-        <main className="min-h-screen bg-stone-100 dark:bg-background text-foreground transition-colors selection:bg-sky-100 selection:text-sky-900">
+        <main className="min-h-screen bg-snack-white dark:bg-stone-950 text-foreground transition-colors relative overflow-hidden">
+            {/* Global Artisanal Particles - Background Layer */}
+            <div className="fixed inset-0 pointer-events-none z-0 opacity-10">
+            </div>
+
             <Navbar />
 
-            <div className="pt-24 lg:pt-32 pb-20">
+            <div className="relative z-10 pt-24 lg:pt-32 pb-20">
                 <div className="max-w-[1440px] mx-auto px-2 lg:px-4">
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-1 text-[13px] text-stone-500 mb-2 px-2">
-                        <Link href="/" className="hover:text-blue-600">Home</Link>
+                    <nav className="flex items-center gap-1 text-[13px] text-stone-500 mb-4 px-2 font-medium">
+                        <Link href="/" className="hover:text-lava-orange transition-colors">Home</Link>
                         <ChevronRight size={12} />
-                        <span className="text-stone-900 dark:text-stone-400 font-medium whitespace-nowrap overflow-hidden text-ellipsis">Food Products</span>
+                        <span className="text-stone-900 dark:text-stone-400 font-bold whitespace-nowrap overflow-hidden text-ellipsis uppercase tracking-widest text-[10px]">Premium Snacks</span>
                     </nav>
 
                     <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 items-start">
                         {/* Sidebar Filters - Hidden on mobile, shown on lg */}
-                        <aside className="hidden lg:block w-[280px] bg-card-bg shadow-sm border border-card-border rounded-[3px] sticky top-28 h-[calc(100vh-120px)] overflow-y-auto">
-                            <div className="p-4 border-b border-card-border">
-                                <h2 className="text-lg font-bold text-stone-900 dark:text-white">Filters</h2>
+                        <aside className="hidden lg:block w-[280px] bg-card-bg shadow-2xl shadow-stone-900/5 dark:shadow-none border border-card-border rounded-3xl sticky top-28 h-[calc(100vh-120px)] overflow-y-auto">
+                            <div className="p-5 border-b border-card-border">
+                                <h2 className="text-xl font-brand font-black uppercase tracking-tight text-stone-900 dark:text-white">Filters</h2>
                             </div>
                             <ProductFilters
                                 activeFilter={activeFilter}
@@ -40,28 +46,28 @@ export default function ShopPage() {
                         </aside>
 
                         {/* Product Display Area */}
-                        <div className="flex-grow w-full bg-card-bg shadow-sm border border-card-border lg:rounded-[3px] min-h-[600px]">
+                        <div className="flex-grow w-full bg-card-bg shadow-2xl shadow-stone-900/5 dark:shadow-none border border-card-border lg:rounded-3xl min-h-[600px] overflow-hidden">
                             {/* Desktop: Header + Horizontal Sort Bar */}
                             <div className="hidden lg:block border-b border-card-border">
-                                <div className="px-4 pt-4 pb-2">
-                                    <h1 className="text-base font-bold text-stone-900 dark:text-white">
-                                        Food Products <span className="text-[12px] font-normal text-stone-500 ml-1">(Showing 1 – 40 products of 8,478 products)</span>
+                                <div className="px-6 pt-6 pb-2">
+                                    <h1 className="text-lg font-brand font-black uppercase tracking-tight text-stone-900 dark:text-white">
+                                        All Cravings <span className="text-[12px] font-bold text-stone-400 ml-2 tracking-widest uppercase">(Showing {filteredProductsCount} Flavors)</span>
                                     </h1>
                                 </div>
-                                <div className="flex items-center gap-6 px-4 py-2 text-sm">
-                                    <span className="font-bold text-stone-900 dark:text-white">Sort By</span>
+                                <div className="flex items-center gap-8 px-6 py-3 text-sm">
+                                    <span className="font-brand font-black uppercase tracking-widest text-[10px] text-stone-400">Sort By</span>
                                     {[
                                         { id: "popularity", name: "Popularity" },
-                                        { id: "price-low", name: "Price -- Low to High" },
-                                        { id: "price-high", name: "Price -- High to Low" },
+                                        { id: "price-low", name: "Price: Low to High" },
+                                        { id: "price-high", name: "Price: High to Low" },
                                         { id: "newest", name: "Newest First" }
                                     ].map((opt) => (
                                         <button
                                             key={opt.id}
                                             onClick={() => setActiveSort(opt.id)}
-                                            className={`py-2 border-b-2 transition-colors ${activeSort === opt.id
-                                                ? "text-blue-600 border-blue-600 font-bold"
-                                                : "text-stone-600 dark:text-stone-400 border-transparent hover:text-blue-600"
+                                            className={`py-2 border-b-2 transition-all font-brand font-bold uppercase tracking-widest text-[11px] ${activeSort === opt.id
+                                                ? "text-lava-orange border-lava-orange"
+                                                : "text-stone-500 dark:text-stone-400 border-transparent hover:text-lava-orange"
                                                 }`}
                                         >
                                             {opt.name}
@@ -71,7 +77,7 @@ export default function ShopPage() {
                             </div>
 
                             {/* Mobile Filters Bar */}
-                            <div className="lg:hidden sticky top-24 z-20 flex bg-card-bg border-b border-card-border">
+                            <div className="lg:hidden fixed top-[60px] left-0 right-0 z-20 flex bg-card-bg border-b border-card-border shadow-sm">
                                 <button
                                     onClick={() => setIsSortOpen(true)}
                                     className="flex-1 flex items-center justify-center gap-2 py-3 border-r border-card-border active:bg-stone-50"
@@ -86,7 +92,7 @@ export default function ShopPage() {
                                     <Filter size={16} />
                                     <span className="text-sm font-medium">Filter</span>
                                     {activeFilter !== 'all' && (
-                                        <span className="bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">1</span>
+                                        <span className="bg-lava-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">1</span>
                                     )}
                                 </button>
                             </div>
@@ -119,13 +125,13 @@ export default function ShopPage() {
                         <div className="p-4 border-t border-card-border flex gap-4 bg-white dark:bg-card-bg transition-colors">
                             <button
                                 onClick={() => { setActiveFilter("all"); setIsFilterOpen(false); }}
-                                className="flex-1 py-3 text-sm font-bold border border-card-border text-stone-900 dark:text-white"
+                                className="flex-1 py-4 text-xs font-brand font-black uppercase tracking-widest border border-card-border rounded-xl text-stone-900 dark:text-white"
                             >
                                 CLEAR ALL
                             </button>
                             <button
                                 onClick={() => setIsFilterOpen(false)}
-                                className="flex-1 py-3 text-sm font-bold bg-[#fb641b] text-white shadow-lg"
+                                className="flex-1 py-4 text-xs font-brand font-black uppercase tracking-widest bg-lava-orange text-white rounded-xl shadow-lg shadow-lava-orange/20"
                             >
                                 APPLY
                             </button>
@@ -151,9 +157,9 @@ export default function ShopPage() {
                                         type="radio"
                                         checked={activeSort === opt.id}
                                         onChange={() => { setActiveSort(opt.id); setIsSortOpen(false); }}
-                                        className="w-5 h-5 accent-blue-600"
+                                        className="w-5 h-5 accent-lava-orange"
                                     />
-                                    <span className={`text-base ${activeSort === opt.id ? "font-bold text-blue-600" : "text-stone-900 dark:text-stone-300"}`}>
+                                    <span className={`text-base font-brand font-bold uppercase tracking-tight ${activeSort === opt.id ? "text-lava-orange" : "text-stone-900 dark:text-stone-300"}`}>
                                         {opt.name}
                                     </span>
                                 </label>

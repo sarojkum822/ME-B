@@ -2,93 +2,85 @@
 
 import React from "react";
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import FlavorSections from "@/components/FlavorSections";
-import Testimonials from "@/components/Testimonials";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
-import CrunchStats from "@/components/CrunchStats";
-import HeritageStory from "@/components/HeritageStory";
+import HeroRefined from "@/components/HeroRefined";
+import TrustStrip from "@/components/TrustStrip";
 import ShopQuick from "@/components/ShopQuick";
+import HealthBar from "@/components/HealthBar";
+import HeritageStory from "@/components/HeritageStory";
+import UGCSection from "@/components/UGCSection";
+import Testimonials from "@/components/Testimonials";
+import Footer from "@/components/Footer";
+import SectionDivider from "@/components/SectionDivider";
 
 export default function Home() {
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
-    <main className="min-h-screen relative bg-snack-white dark:bg-stone-950">
-      {/* Global Artisanal Particles - Background Layer */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-10">
-        {mounted && [...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-float-spin"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.7}s`,
-              transform: `scale(${0.3 + Math.random() * 0.7})`
-            }}
-          >
-            <span className="text-2xl">🍿</span>
-          </div>
-        ))}
-      </div>
+    <main className="min-h-screen relative bg-[var(--background)]">
+      <Navbar />
 
-      <div className="relative z-10">
-        <Navbar />
-        <Hero />
+      {/* 1. HERO */}
+      <HeroRefined />
 
-        {/* Brands / Icons Bar */}
-        <section className="bg-white dark:bg-stone-900 py-12 overflow-hidden border-y-4 border-stone-900 dark:border-stone-700">
-          <div className="flex animate-marquee whitespace-nowrap gap-12 text-stone-900 dark:text-white font-brand font-black text-2xl uppercase tracking-widest">
-            {[...Array(10)].map((_, i) => (
-              <div key={i} className="flex gap-12">
-                <span>Healthy</span>
-                <span className="text-lava-orange">★</span>
-                <span>High Protein</span>
-                <span className="text-mint-teal">★</span>
-                <span>Gluten Free</span>
-                <span className="text-berry-pink">★</span>
-                <span>100% Vegan</span>
-                <span className="text-sun-yellow">★</span>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* 2. TRUST STRIP */}
+      <TrustStrip />
 
-        <CrunchStats />
-        <FlavorSections />
-        <ShopQuick />
-        <HeritageStory />
-        <Testimonials />
-        <FAQ />
+      {/* ── divider: white → cream ── */}
+      <SectionDivider variant="light" />
 
-        {/* Final CTA before Footer */}
-        <section className="bg-stone-900 text-white py-24 text-center px-6">
-          <h2 className="text-4xl md:text-6xl font-brand font-black mb-8">
-            Ready to join the <span className="text-mint-teal">Mithila</span> revolution?
+      {/* 3. BESTSELLER GRID */}
+      <ShopQuick />
+
+      {/* ── divider: cream → dark ── */}
+      <SectionDivider variant="accent" />
+
+      {/* 4. HEALTH BAR */}
+      <HealthBar />
+
+      {/* ── divider: dark → white ── */}
+      <SectionDivider variant="light" />
+
+      {/* 5. HERITAGE STORY */}
+      <HeritageStory />
+
+      {/* ── divider: white → cream ── */}
+      <SectionDivider variant="light" />
+
+      {/* 6. UGC */}
+      <UGCSection />
+
+      {/* ── divider: cream → white ── */}
+      <SectionDivider variant="light" />
+
+      {/* 7. TESTIMONIALS */}
+      <Testimonials />
+
+      {/* ── divider: white → cream ── */}
+      <SectionDivider variant="light" />
+
+      {/* 8. FINAL CTA */}
+      <section className="relative py-16 md:py-20 text-center px-6 md:px-12 lg:px-20 overflow-hidden bg-[hsl(var(--background))]">
+        <div className="relative z-10 max-w-xl mx-auto">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-brand font-black mb-4 uppercase tracking-tight text-[var(--text-primary)]">
+            Ready to Get<br />
+            <span className="text-[var(--accent-warm)]">Hooked?</span>
           </h2>
-          <p className="text-xl text-stone-400 mb-12 max-w-2xl mx-auto font-medium">
-            Register now for 10% off your first order and exclusive access to new limited-run flavors.
+          <p className="text-base md:text-lg mb-8 font-medium text-[var(--text-secondary)]">
+            10% off your first order. New limited flavors drop monthly.
           </p>
-          <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4 mb-2">
+          <form className="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
             <input
               type="email"
-              placeholder="Snack enthusiast email..."
-              className="flex-1 px-6 py-4 bg-stone-800 rounded-2xl outline-none border-2 border-stone-700 focus:border-sun-yellow transition-colors font-medium text-white"
+              placeholder="Your email..."
+              className="flex-1 px-5 py-4 rounded-xl outline-none font-medium text-sm transition-colors bg-[var(--chip-bg)] border border-[var(--chip-border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
             />
-            <button className="px-8 py-4 bg-sun-yellow text-stone-900 font-brand font-black rounded-2xl hover:scale-105 transition-transform whitespace-nowrap">
-              Sign Me Up!
+            <button className="px-8 py-4 font-brand font-black rounded-xl text-sm uppercase tracking-widest transition-transform hover:scale-105 bg-[var(--cta-primary-bg)] text-[var(--cta-primary-text)]">
+              Join
             </button>
           </form>
-        </section>
+        </div>
+      </section>
 
-        <Footer />
-      </div>
+      {/* 9. FOOTER */}
+      <Footer />
     </main>
   );
 }

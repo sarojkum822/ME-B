@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mithila Essence</string>
+    <string name="title_activity_main">Mithila Essence</string>
+    <string name="package_name">com.mithilaessence.app</string>
+    <string name="custom_url_scheme">com.mithilaessence.app</string>
+</resources>

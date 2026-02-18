@@ -19,6 +19,8 @@ export default function CartPage() {
     const [promoCode, setPromoCode] = useState("");
     const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
     const [promoError, setPromoError] = useState("");
+    const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
     const discount = appliedPromo ? Math.round(subtotal * (PROMO_CODES[appliedPromo] / 100)) : 0;
     const total = subtotal - discount;
@@ -139,7 +141,7 @@ export default function CartPage() {
                                                             >
                                                                 Remove
                                                             </button>
-                                                            <button className="text-sm font-bold uppercase hover:text-sky-600 dark:hover:text-sky-400 transition-colors text-foreground">
+                                                            <button className="text-sm font-bold uppercase hover:text-sky-600 dark:hover:text-sky-400 transition-colors text-foreground px-2">
                                                                 Save for later
                                                             </button>
                                                         </div>
@@ -149,14 +151,26 @@ export default function CartPage() {
                                         ))}
                                     </div>
 
-                                    {/* Place Order Section */}
                                     <div className="p-4 flex justify-end border-t border-card-border bg-card-bg sticky bottom-0 z-10">
-                                        <button
-                                            className="px-16 py-3.5 bg-lava-orange text-white font-bold rounded shadow-lg hover:bg-lava-orange/90 transition-all uppercase tracking-wide text-[15px]"
-                                            onClick={() => alert("Redirecting to checkout...")}
-                                        >
-                                            Place Order
-                                        </button>
+                                        {isOrderPlaced ? (
+                                            <div className="flex items-center gap-2 text-mint-teal font-bold uppercase tracking-widest text-sm w-full justify-center">
+                                                <Check className="w-5 h-5" /> Order Placed Successfully!
+                                            </div>
+                                        ) : (
+                                            <button
+                                                disabled={isCheckoutLoading}
+                                                className="px-16 py-3.5 bg-lava-orange text-white font-bold rounded shadow-lg hover:bg-lava-orange/90 transition-all uppercase tracking-wide text-[15px] disabled:opacity-50"
+                                                onClick={() => {
+                                                    setIsCheckoutLoading(true);
+                                                    setTimeout(() => {
+                                                        setIsCheckoutLoading(false);
+                                                        setIsOrderPlaced(true);
+                                                    }, 2000);
+                                                }}
+                                            >
+                                                {isCheckoutLoading ? "Processing..." : "Place Order"}
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +231,7 @@ export default function CartPage() {
 
                                 {/* Security Badge */}
                                 <div className="mt-4 flex items-center gap-3 px-2">
-                                    <div className="w-8 h-8 rounded-full border-2 border-card-border flex items-center justify-center opacity-50">
+                                    <div className="w-8 h-8 rounded-full border border-card-border flex items-center justify-center opacity-50">
                                         <Check size={16} className="text-muted" />
                                     </div>
                                     <p className="text-xs text-muted font-medium leading-relaxed">

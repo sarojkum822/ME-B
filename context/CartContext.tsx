@@ -19,6 +19,7 @@ interface CartContextType {
     clearCart: () => void;
     cartCount: number;
     cartTotal: number;
+    lastAddedId: number | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -29,6 +30,7 @@ const INITIAL_CART: CartItem[] = [
 
 export function CartProvider({ children }: { children: ReactNode }) {
     const [cartItems, setCartItems] = useState<CartItem[]>(INITIAL_CART);
+    const [lastAddedId, setLastAddedId] = useState<number | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // Load from local storage on mount
@@ -61,6 +63,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
             }
             return [...prev, { ...newItem, qty: 1 }];
         });
+        setLastAddedId(newItem.id);
+        // Reset after animation duration
+        setTimeout(() => setLastAddedId(null), 1000);
     };
 
     const removeFromCart = (id: number) => {
@@ -94,6 +99,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 clearCart,
                 cartCount,
                 cartTotal,
+                lastAddedId,
             }}
         >
             {children}

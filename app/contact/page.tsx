@@ -30,17 +30,24 @@ export default function ContactPage() {
     };
 
     return (
-        <main className="min-h-screen bg-snack-white dark:bg-stone-950 text-stone-900 dark:text-white">
+        <main className="min-h-screen relative bg-snack-white dark:bg-stone-950 text-stone-900 dark:text-white overflow-hidden">
+            {/* Global Artisanal Particles - Background Layer */}
+            <div className="fixed inset-0 pointer-events-none z-0 opacity-10">
+            </div>
+
+            {/* Hero Glow */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-lava-orange/5 blur-[100px] rounded-full pointer-events-none" />
+
             <Navbar />
 
             <section className="pt-40 pb-20 px-6">
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20">
                     {/* Visual/Info Side */}
-                    <div className="flex-1">
-                        <span className="text-lava-orange font-bold tracking-[0.3em] uppercase mb-4 block">Say Hello</span>
-                        <h1 className="text-7xl md:text-9xl font-brand font-black uppercase leading-[0.85] tracking-tighter mb-12">
+                    <div className="flex-1 relative z-10">
+                        <span className="text-lava-orange font-brand font-black tracking-[0.3em] uppercase mb-6 block">Say Hello</span>
+                        <h1 className="text-7xl md:text-9xl font-brand font-black uppercase leading-[0.85] tracking-tighter mb-12 text-stone-900 dark:text-white">
                             Drop Us A <br />
-                            <span className="text-sky-blue">Message.</span>
+                            <span className="text-lava-orange">Message.</span>
                         </h1>
 
                         <div className="space-y-12 mt-20">

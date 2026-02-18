@@ -26,40 +26,41 @@ export default function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="bg-sun-yellow dark:bg-stone-950 py-24 px-6 md:px-12 border-b-4 border-stone-900 dark:border-stone-800">
-            <div className="max-w-4xl mx-auto">
+        <section className="bg-stone-50 dark:bg-stone-950 py-20 md:py-32 px-6 md:px-12 lg:px-20 border-t border-stone-100 dark:border-stone-900">
+            <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-16">
-                    <span className="bg-lava-orange text-white px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-4 inline-block">
-                        Any Questions?
+                    <span className="text-lava-orange font-brand font-bold text-xs uppercase tracking-[0.4em] mb-4 block">
+                        Got Questions?
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-brand font-black text-stone-900 dark:text-white">
-                        The <span className="text-berry-pink text-shadow-sm">Snack</span> Intellectuals FAQ
+                    <h2 className="text-4xl md:text-6xl font-brand font-black text-stone-900 dark:text-white leading-tight">
+                        Common <span className="text-stone-300 dark:text-stone-700">Inquiries.</span>
                     </h2>
                 </div>
 
-                <div className="space-y-4">
-                    {faqs.map((faq, index) => (
+                <div className="space-y-3">
+                    {faqs.slice(0, 3).map((faq, index) => (
                         <div
                             key={index}
-                            className="group border-3 border-stone-900 dark:border-stone-800 rounded-3xl bg-white dark:bg-stone-900 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(28,25,23,1)] dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]"
+                            className={`group border border-stone-100 dark:border-stone-800 rounded-2xl bg-white dark:bg-stone-900 transition-all duration-300 ${openIndex === index ? 'shadow-md ring-1 ring-stone-100 dark:ring-stone-800' : 'hover:border-stone-200 dark:hover:border-stone-700'}`}
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                 className="w-full flex items-center justify-between p-6 md:p-8 text-left"
                             >
-                                <span className="text-lg md:text-xl font-brand font-bold text-stone-900 dark:text-white">
+                                <span className="text-base md:text-lg font-brand font-bold text-stone-900 dark:text-white group-hover:text-lava-orange transition-colors">
                                     {faq.question}
                                 </span>
                                 <ChevronDown
-                                    className={`w-6 h-6 text-stone-900 dark:text-white transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
+                                    size={20}
+                                    className={`text-stone-400 transition-transform duration-500 ${openIndex === index ? "rotate-180 text-lava-orange" : ""
                                         }`}
                                 />
                             </button>
                             <div
-                                className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                                className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                                     }`}
                             >
-                                <div className="p-6 md:p-8 pt-0 text-stone-600 dark:text-stone-400 font-medium leading-relaxed border-t-2 border-stone-100 dark:border-stone-800 italic">
+                                <div className="p-6 md:p-8 pt-0 text-stone-500 dark:text-stone-400 font-medium leading-[1.8] text-sm md:text-base max-w-2xl">
                                     {faq.answer}
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ interface User {
     name: string;
     email: string;
     joinDate: string;
+    loyaltyPoints: number;
 }
 
 interface AuthContextType {
@@ -36,7 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             id: Date.now().toString(),
             name,
             email,
-            joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+            loyaltyPoints: 0
         };
         setUser(newUser);
         localStorage.setItem("makhana_user", JSON.stringify(newUser));

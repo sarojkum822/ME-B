@@ -1,36 +1,62 @@
-"use client";
+import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 
 const trustCards = [
-    { label: "High Protein", description: "9g of plant-based power per pack.", icon: "💪", color: "bg-lava-orange" },
-    { label: "Wood-Fire Roasted", description: "Never fried, always perfectly crunchy.", icon: "🔥", color: "bg-sun-yellow" },
-    { label: "Under 100 Cal", description: "The perfect guilt-free snack buddy.", icon: "⚖️", color: "bg-mint-teal" },
-    { label: "No Palm Oil", description: "Made with heart-healthy ingredients.", icon: "🌿", color: "bg-berry-pink" },
+    { metric: "9g", label: "Protein", sublabel: "Plant Power", proof: "Per pack energy", icon: "💪", color: "text-lava-orange", info: "High-quality plant protein for muscle recovery and all-day energy." },
+    { metric: "97", label: "Calories", sublabel: "Guilt-Free", proof: "Low density snack", icon: "⚖️", color: "text-mint-teal", info: "Light as air. One whole pack is less than a small bag of chips." },
+    { metric: "0%", label: "Palm Oil", sublabel: "Heart Safe", proof: "Zero trans fats", icon: "🌿", color: "text-berry-pink", info: "Roasted in clean air. No cheap oils. No hidden fats." },
+    { metric: "Low", label: "GI Index", sublabel: "Slow Energy", proof: "Sugar stability", icon: "📉", color: "text-sun-yellow", info: "Keeps your blood sugar stable and cravings away." },
 ];
 
 export default function CrunchStats() {
-    return (
-        <section className="bg-white dark:bg-stone-950 py-24 px-6 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <span className="text-lava-orange font-brand font-black text-sm uppercase tracking-[0.3em] mb-4 block animate-reveal">Why Mithila Essence?</span>
-                    <h2 className="text-4xl md:text-6xl font-brand font-black uppercase text-stone-900 dark:text-white leading-[0.9] tracking-tighter">
-                        Smart Snacking. <br /> <span className="text-stone-400">Pure Tradition.</span>
-                    </h2>
-                </div>
+    const [expandedIdx, setExpandedIdx] = React.useState<number | null>(null);
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    return (
+        <section className="bg-[var(--background)] py-6 md:py-12 px-6 lg:px-20 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-6">
                     {trustCards.map((card, i) => (
-                        <div key={i} className="group bg-stone-50 dark:bg-stone-900 p-8 rounded-[2.5rem] border-4 border-stone-900 dark:border-stone-800 hover:bg-stone-900 hover:text-white transition-all duration-500">
-                            <div className={`${card.color} w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-lg border-2 border-stone-900 group-hover:scale-110 transition-transform`}>
-                                {card.icon}
+                        <motion.div
+                            key={i}
+                            onClick={() => setExpandedIdx(expandedIdx === i ? null : i)}
+                            className="group p-4 md:p-6 rounded-2xl bg-[var(--muted)]/50 dark:bg-[var(--muted-bg)]/40 border border-[var(--muted-foreground)]/10 transition-all cursor-pointer flex flex-col"
+                        >
+                            <div className="flex items-center justify-between md:mb-4">
+                                <div className="flex items-center gap-3">
+                                    <span className={`text-2xl md:text-3xl font-brand font-black ${card.color}`}>
+                                        {card.metric}
+                                    </span>
+                                    <span className="text-[11px] md:text-xs font-brand font-black uppercase tracking-widest text-stone-900 dark:text-white">
+                                        {card.label}
+                                    </span>
+                                </div>
+                                <span className="text-sm md:text-xl opacity-40">●</span>
                             </div>
-                            <h3 className="text-2xl font-brand font-black uppercase mb-2 tracking-tight">
-                                {card.label}
-                            </h3>
-                            <p className="text-stone-500 group-hover:text-stone-300 font-medium leading-snug">
-                                {card.description}
-                            </p>
-                        </div>
+
+                            {/* Mobile expansion content */}
+                            <AnimatePresence>
+                                {expandedIdx === i && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="py-3 border-t border-stone-100 dark:border-stone-800 mt-3">
+                                            <p className="text-[10px] text-stone-500 font-medium leading-tight">
+                                                {card.info}
+                                            </p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Desktop only details */}
+                            <div className="hidden md:flex flex-col gap-1">
+                                <span className="text-[11px] font-bold text-stone-700 dark:text-stone-300">{card.sublabel}</span>
+                                <span className="text-[9px] font-medium text-stone-400">{card.proof}</span>
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

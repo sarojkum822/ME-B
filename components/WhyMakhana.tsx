@@ -20,81 +20,111 @@ export default function WhyMakhana() {
         { snack: "Roasted Peanuts", calories: "567 cal", protein: "26g", fat: "49g", fiber: "8g", verdict: "⚠️ High cal" },
     ];
 
-    return (
-        <section className="py-24 px-6 bg-gradient-to-br from-mint-teal/10 via-white dark:via-stone-900 to-sun-yellow/10 dark:from-mint-teal/5 dark:to-sun-yellow/5 relative overflow-hidden">
-            {/* Background blobs */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-10 left-10 w-64 h-64 bg-mint-teal/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-10 right-10 w-80 h-80 bg-sun-yellow/20 rounded-full blur-3xl" />
-            </div>
+    const benefitPillars = [
+        {
+            title: "Digestive Vitality",
+            description: "High natural fiber content (1.8g per serving) that improves gut health and provides lasting satiety without the heavy feeling of processed snacks.",
+            icons: ["🌾", "🍃"],
+            metrics: "1.8g Fiber"
+        },
+        {
+            title: "Heart-Focused Nutrition",
+            description: "Zero cholesterol and nearly zero trans-fats. Packed with magnesium and potassium to support healthy blood pressure and cardiovascular rhythm.",
+            icons: ["❤️", "🫀"],
+            metrics: "0% Cholesterol"
+        },
+        {
+            title: "Metabolic Balance",
+            description: "Low Glycemic Index prevents insulin spikes, making it an ideal snack for diabetic-friendly diets and weight management journeys.",
+            icons: ["📉", "✨"],
+            metrics: "Low GI Index"
+        },
+        {
+            title: "Holistic Protection",
+            description: "Rich in kaempferol and other powerful antioxidants that fight cellular inflammation and support your body's natural immune defenses.",
+            icons: ["🛡️", "🌿"],
+            metrics: "Antioxidant Rich"
+        }
+    ];
 
+    return (
+        <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20 bg-[var(--background)] relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Section Header */}
-                <div className="text-center mb-16">
-                    <span className="bg-stone-900 text-sun-yellow px-6 py-2 rounded-full font-brand font-bold text-sm uppercase tracking-widest inline-block mb-6">
+                <div className="text-center mb-24">
+                    <span className="text-[hsl(var(--accent))] font-brand font-bold text-xs uppercase tracking-[0.4em] mb-4 block">
                         The Smart Choice
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-brand font-black text-stone-900 dark:text-white mb-6">
-                        Why <span className="text-mint-teal">Makhana</span>?
+                    <h2 className="text-5xl md:text-8xl lg:text-9xl font-brand font-black text-[var(--foreground)] leading-[0.9] tracking-tighter uppercase">
+                        Why <br /> <span className="text-[var(--muted-foreground)]/20">Makhana?</span>
                     </h2>
-                    <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-                        Not all snacks are created equal. Here&apos;s why Makhana stands out as the healthiest choice for guilt-free munching.
-                    </p>
                 </div>
 
-                {/* Benefits Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 mb-20">
-                    {benefits.map((benefit, index) => (
+                {/* Benefits Pillars - Benefit First Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
+                    {benefitPillars.map((pillar, index) => (
                         <div
                             key={index}
-                            className="bg-white/80 dark:bg-stone-800/80 backdrop-blur-sm p-5 rounded-2xl shadow-lg border border-white/50 dark:border-stone-700 hover:shadow-xl hover:scale-105 transition-all duration-300 group"
+                            className="bg-[var(--muted)]/50 dark:bg-[var(--muted-bg)]/40 p-10 md:p-14 rounded-[2.5rem] border border-[var(--muted-foreground)]/10 flex flex-col items-start transition-all hover:shadow-xl group"
                         >
-                            <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">{benefit.icon}</div>
-                            <h3 className="font-brand font-bold text-stone-900 dark:text-white text-sm mb-1">{benefit.title}</h3>
-                            <p className="text-stone-600 dark:text-stone-400 text-xs">{benefit.description}</p>
+                            <div className="flex justify-between items-end w-full mb-8">
+                                <div className="p-4 bg-[var(--card-bg)] rounded-2xl shadow-sm border border-[var(--card-border)]">
+                                    <span className="text-3xl">{pillar.icons[0]}</span>
+                                </div>
+                                <span className="text-4xl md:text-5xl font-brand font-black text-[hsl(var(--accent))] leading-none">
+                                    {pillar.metrics.split(' ')[0]}
+                                    <span className="text-xs uppercase tracking-widest ml-1 text-stone-400 font-bold">{pillar.metrics.split(' ')[1]}</span>
+                                </span>
+                            </div>
+                            <h3 className="text-2xl md:text-3xl font-brand font-black text-[var(--foreground)] mb-4 uppercase tracking-tight">
+                                {pillar.title}
+                            </h3>
+                            <p className="text-[var(--muted-foreground)] text-base md:text-lg leading-relaxed font-medium">
+                                {pillar.description}
+                            </p>
                         </div>
                     ))}
                 </div>
 
-                {/* Comparison Table */}
-                <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-2xl overflow-hidden border border-stone-200 dark:border-stone-700">
-                    <div className="bg-stone-900 text-white p-6">
-                        <h3 className="text-2xl md:text-3xl font-brand font-black text-center">
-                            Makhana vs. <span className="text-lava-orange">Other Snacks</span>
+                {/* Comparison Table - Professional Report Style */}
+                <div className="bg-[var(--card-bg)] rounded-[2rem] border border-[var(--card-border)] overflow-hidden shadow-2xl">
+                    <div className="p-10 md:p-14 border-b border-[var(--card-border)]">
+                        <h3 className="text-2xl md:text-3xl font-brand font-black text-[var(--foreground)] uppercase tracking-tight">
+                            The Competitive <span className="text-[var(--muted-foreground)]/30">Edge.</span>
                         </h3>
-                        <p className="text-stone-400 text-center mt-2">Per 100g serving comparison</p>
+                        <p className="text-[var(--muted-foreground)] mt-2 font-medium uppercase tracking-widest text-xs">Per 100g serving comparison</p>
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-stone-100 dark:bg-stone-700">
+                        <table className="w-full text-left">
+                            <thead className="bg-[var(--muted)]/30">
                                 <tr>
-                                    <th className="px-6 py-4 text-left font-brand font-bold text-stone-900 dark:text-white">Snack</th>
-                                    <th className="px-6 py-4 text-center font-brand font-bold text-stone-900 dark:text-white">Calories</th>
-                                    <th className="px-6 py-4 text-center font-brand font-bold text-stone-900 dark:text-white">Protein</th>
-                                    <th className="px-6 py-4 text-center font-brand font-bold text-stone-900 dark:text-white">Fat</th>
-                                    <th className="px-6 py-4 text-center font-brand font-bold text-stone-900 dark:text-white">Fiber</th>
-                                    <th className="px-6 py-4 text-center font-brand font-bold text-stone-900 dark:text-white">Verdict</th>
+                                    <th className="px-8 py-5 font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Snack Type</th>
+                                    <th className="px-8 py-5 text-center font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Calories</th>
+                                    <th className="px-8 py-5 text-center font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Protein</th>
+                                    <th className="px-8 py-5 text-center font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Fat</th>
+                                    <th className="px-8 py-5 text-center font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Fiber</th>
+                                    <th className="px-8 py-5 text-right font-brand font-bold text-[var(--muted-foreground)] uppercase tracking-widest text-[10px]">Verdict</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="divide-y divide-[var(--card-border)]/50">
                                 {comparison.map((item, index) => (
                                     <tr
                                         key={index}
-                                        className={`border-b border-stone-100 dark:border-stone-700/50 ${index === 0 ? 'bg-mint-teal/10 dark:bg-mint-teal/5' : 'hover:bg-stone-50 dark:hover:bg-stone-700/30'}`}
+                                        className={`group transition-colors ${index === 0 ? 'bg-[var(--primary)]/[0.05]' : 'hover:bg-[var(--muted)]/50'}`}
                                     >
-                                        <td className={`px-6 py-4 font-brand font-bold ${index === 0 ? 'text-mint-teal' : 'text-stone-700 dark:text-stone-300'}`}>
+                                        <td className={`px-8 py-6 font-brand font-bold ${index === 0 ? 'text-[var(--accent)] text-lg' : 'text-[var(--foreground)]'}`}>
                                             {item.snack}
                                         </td>
-                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600 dark:text-stone-400'}`}>
+                                        <td className={`px-8 py-6 text-center ${index === 0 ? 'text-[var(--foreground)] font-black' : 'text-[var(--muted-foreground)]'}`}>
                                             {item.calories}
                                         </td>
-                                        <td className="px-6 py-4 text-center text-stone-600 dark:text-stone-400">{item.protein}</td>
-                                        <td className={`px-6 py-4 text-center ${index === 0 ? 'text-mint-teal font-bold' : 'text-stone-600 dark:text-stone-400'}`}>
+                                        <td className="px-8 py-6 text-center text-[var(--muted-foreground)] font-medium">{item.protein}</td>
+                                        <td className={`px-8 py-6 text-center ${index === 0 ? 'text-[var(--foreground)] font-black' : 'text-[var(--muted-foreground)]'}`}>
                                             {item.fat}
                                         </td>
-                                        <td className="px-6 py-4 text-center text-stone-600 dark:text-stone-400">{item.fiber}</td>
-                                        <td className={`px-6 py-4 text-center font-brand font-bold ${index === 0 ? 'text-mint-teal' : 'text-lava-orange'}`}>
+                                        <td className="px-8 py-6 text-center text-[var(--muted-foreground)] font-medium">{item.fiber}</td>
+                                        <td className={`px-8 py-6 text-right font-brand font-bold ${index === 0 ? 'text-[var(--accent)]' : 'text-[var(--muted-foreground)] text-xs uppercase'}`}>
                                             {item.verdict}
                                         </td>
                                     </tr>
@@ -106,12 +136,12 @@ export default function WhyMakhana() {
 
                 {/* Bottom CTA */}
                 <div className="text-center mt-12">
-                    <p className="text-lg text-stone-600 dark:text-stone-400 mb-6">
+                    <p className="text-lg text-[var(--muted-foreground)] mb-6">
                         Make the switch to smarter snacking today!
                     </p>
                     <a
                         href="/shop"
-                        className="inline-block bg-stone-900 dark:bg-white text-white dark:text-stone-900 px-10 py-5 rounded-2xl font-brand font-bold text-lg hover:bg-stone-800 dark:hover:bg-stone-100 hover:scale-105 transition-all shadow-xl"
+                        className="inline-block bg-[var(--foreground)] text-[var(--background)] px-10 py-5 rounded-2xl font-brand font-bold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-xl"
                     >
                         Shop Makhana Now →
                     </a>

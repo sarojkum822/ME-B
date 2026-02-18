@@ -65,6 +65,21 @@ export default function LoginPage() {
                         </button>
                     </form>
 
+                    {/* Divider */}
+                    <div className="flex items-center gap-4 my-6">
+                        <div className="flex-1 h-px bg-stone-200 dark:bg-stone-700" />
+                        <span className="text-xs text-stone-400 uppercase tracking-wider font-bold">or</span>
+                        <div className="flex-1 h-px bg-stone-200 dark:bg-stone-700" />
+                    </div>
+
+                    {/* Guest Login */}
+                    <button
+                        onClick={() => login("guest@mithilaessence.com", "Guest User")}
+                        className="w-full py-3 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-brand font-bold text-sm rounded-xl hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors border border-stone-200 dark:border-stone-700"
+                    >
+                        Continue as Guest
+                    </button>
+
                     <div className="mt-8 text-center">
                         <p className="text-stone-500 dark:text-stone-400">
                             Don't have an account?{" "}

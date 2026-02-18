@@ -1,33 +1,120 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light Theme (default) */
+/* ============================================
+   DUAL MODE COLOR SYSTEM - Intentional Design
+   Light = Trust & Clarity
+   Dark = Craving & Emotion
+   ============================================ */
+
+/* Light Mode (default) */
 :root,
 .light {
-  --background: #FCFCFC;
-  --foreground: #1A1A1A;
-  --card-bg: #FFFFFF;
-  --card-border: #e5e5e5;
-  --muted: #737373;
-  --muted-bg: #f5f5f5;
-  --nav-bg: rgba(252, 252, 252, 0.95);
-  --nav-text: #1A1A1A;
-  --footer-bg: #1A1A1A;
-  --footer-text: #FCFCFC;
+  /* Global Heritage Luxury Palette */
+  --background: 36 33% 94%;
+  /* Warmer beige/cream */
+  --foreground: 20 25% 12%;
+  /* Deep Espresso */
+  --primary: 36 90% 50%;
+  --accent: 15 80% 55%;
+  --muted: 36 20% 90%;
+  --muted-foreground: 20 15% 45%;
+  --secondary: 150 20% 92%;
+  --cream: 38 40% 94%;
+  --espresso: 20 30% 15%;
+  --golden: 36 90% 50%;
+  --sage: 150 25% 75%;
+  --coral: 15 80% 55%;
+  --warm-gray: 30 10% 60%;
+  --glow-color: rgba(246, 178, 74, 0.4);
+
+  /* Functional Map */
+  --hero-bg: hsl(var(--background));
+  --hero-bg-secondary: hsl(var(--muted));
+  --hero-glow: transparent;
+
+  /* Text */
+  --text-primary: hsl(var(--foreground));
+  --text-secondary: hsl(var(--muted-foreground));
+  --text-muted: hsl(var(--warm-gray));
+
+  /* CTA */
+  --cta-primary-bg: hsl(var(--primary));
+  --cta-primary-text: hsl(var(--espresso));
+  --cta-primary-hover: hsl(var(--golden));
+  --cta-secondary-border: hsl(var(--muted-foreground));
+  --cta-secondary-text: hsl(var(--foreground));
+  --cta-secondary-hover-bg: hsl(var(--muted));
+
+  /* Trust chips */
+  --chip-bg: hsl(var(--muted));
+  --chip-border: hsl(var(--muted-foreground) / 0.1);
+  --chip-text: hsl(var(--muted-foreground));
+
+  /* Accent */
+  --accent-warm: hsl(var(--accent));
+  --accent-warm-glow: transparent;
+
+  /* Section colors */
+  --section-light: hsl(var(--background));
+  --section-white: #FFFFFF;
+  --section-earthy: hsl(var(--muted));
 }
 
-/* Dark Theme */
+/* Dark Mode (Craving Zone) */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #FCFCFC;
-  --card-bg: #171717;
-  --card-border: #262626;
-  --muted: #a3a3a3;
-  --muted-bg: #262626;
-  --nav-bg: rgba(10, 10, 10, 0.95);
-  --nav-text: #FCFCFC;
-  --footer-bg: #171717;
-  --footer-text: #FCFCFC;
+  /* Background */
+  --hero-bg: #0B0D10;
+  --hero-bg-secondary: #12161C;
+  --hero-glow: rgba(246, 178, 74, 0.12);
+
+  /* Text */
+  --text-primary: #F5F7FA;
+  --text-secondary: #B9C0CA;
+  --text-muted: #8A93A3;
+
+  /* CTA - Warm buttons in dark mode */
+  --cta-primary-bg: #F6B24A;
+  --cta-primary-text: #111318;
+  --cta-primary-hover: #FFBE5C;
+  --cta-secondary-border: #2A313B;
+  --cta-secondary-text: #F5F7FA;
+  --cta-secondary-hover-bg: #12161C;
+
+  /* Trust chips */
+  --chip-bg: #12161C;
+  --chip-border: #242B35;
+  --chip-text: #D8DEE6;
+
+  /* Accent */
+  --accent-warm: #F6B24A;
+  --accent-warm-glow: rgba(246, 178, 74, 0.14);
+  --accent-red-glow: rgba(255, 77, 61, 0.08);
+
+  /* Section colors */
+  --section-light: #12161C;
+  --section-white: #0B0D10;
+  --section-earthy: #12161C;
+
+  /* Brand Token Overrides for Dark Mode Contrast */
+  --espresso: 20 30% 95%;
+  /* Flips from dark to light */
+  --cream: 20 30% 12%;
+  /* Flips from light to dark */
+  --muted-foreground: 215 15% 75%;
+
+  /* Legacy compatibility */
+  --background: #0B0D10;
+  --foreground: #F5F7FA;
+  --card-bg: #12161C;
+  --card-border: #242B35;
+  --muted: #8A93A3;
+  --muted-bg: #12161C;
+  --nav-bg: rgba(11, 13, 16, 0.95);
+  --nav-bg-rgb: 11, 13, 16;
+  --nav-text: #F5F7FA;
+  --footer-bg: #0B0D10;
+  --footer-text: #F5F7FA;
 }
 
 @theme inline {
@@ -37,28 +124,112 @@
   --color-card-border: var(--card-border);
   --color-muted: var(--muted);
   --color-muted-bg: var(--muted-bg);
-  --font-sans: var(--font-inter);
-  --font-brand: var(--font-inter);
+  /* Font Hierarchy */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-brand: var(--font-playfair);
 
-  /* Dopamine Palette */
-  --color-sun-yellow: #FFD233;
-  --color-lava-orange: #FF6B35;
-  --color-berry-pink: #EF476F;
-  --color-mint-teal: #06D6A0;
-  --color-sky-blue: #118AB2;
-  --color-salt-cyan: #4CC9F0;
-  --color-snack-white: #FCFCFC;
+  /* Apple-style Glassmorphism (Extremely High Blur) */
+  --bg-glass: rgba(255, 255, 255, 0.45);
+  --bg-glass-dark: rgba(17, 19, 24, 0.45);
+  --glass-blur: 24px;
+}
+
+@layer utilities {
+  .glass-apple {
+    @apply backdrop-blur-[24px] bg-white/45 dark:bg-[#111318]/45 border-white/10 dark:border-white/5;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px var(--glow-color);
+    transform: translateY(-2px);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mix-blend-multiply {
+    mix-blend-mode: multiply;
+    filter: brightness(1.15) contrast(1.1);
+  }
+
+  @keyframes float-spin {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-20px) rotate(180deg);
+    }
+
+    100% {
+      transform: translateY(0) rotate(360deg);
+    }
+  }
+
+  .animate-float-spin {
+    animation: float-spin 10s linear infinite;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   scrollbar-width: thin;
-  scrollbar-color: #FF6B35 #FCFCFC;
+  scrollbar-color: var(--primary) var(--background);
   overflow-x: hidden;
-  padding-bottom: 7rem;
-  /* Space for bottom menu */
+  padding-bottom: 8rem;
+}
+
+.bg-page-bg {
+  background: var(--background) !important;
+}
+
+/* Typography Base Classes */
+h1,
+.h1 {
+  @apply font-serif font-extrabold uppercase tracking-tight leading-[1.1];
+}
+
+h2,
+.h2 {
+  @apply font-serif font-bold uppercase tracking-tight leading-tight;
+}
+
+h3,
+.h3 {
+  @apply font-serif font-bold;
+}
+
+p,
+body {
+  @apply font-sans font-light;
 }
 
 @media (min-width: 1024px) {
@@ -67,6 +238,7 @@ body {
   }
 }
 
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -158,9 +330,17 @@ body {
     animation: marquee 25s linear infinite;
   }
 
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .mix-blend-multiply {
     mix-blend-mode: multiply;
-    /* Force tan backgrounds to pure white for perfect blending on colored sections */
     filter: brightness(1.15) contrast(1.1);
   }
 
@@ -183,7 +363,7 @@ body {
   }
 }
 
-/* Base Responsive Fixes */
+/* Responsive Fixes */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.75rem !important;
@@ -203,6 +383,25 @@ body {
 
   .mobile-gap {
     gap: 3rem !important;
+  }
+
+  /* Performance: Disable heavy animations on mobile */
+  .animate-blob {
+    animation: none !important;
+  }
+
+  /* Keep marquee scrolling on mobile, just faster */
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+
+  .animate-float-spin {
+    animation: none !important;
+  }
+
+  /* Keep only subtle float for hero product */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
 }
 
