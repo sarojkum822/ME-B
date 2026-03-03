@@ -11,8 +11,27 @@ import UGCSection from "@/components/UGCSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
+import { useToast } from "@/context/ToastContext";
 
 export default function Home() {
+  const [email, setEmail] = React.useState("");
+  const [isSubscribing, setIsSubscribing] = React.useState(false);
+  const { showToast } = useToast();
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) {
+      showToast("Please enter a valid email.", "error");
+      return;
+    }
+    setIsSubscribing(true);
+    setTimeout(() => {
+      setIsSubscribing(false);
+      setEmail("");
+      showToast("Welcome to the club! Check your inbox.", "success");
+    }, 1200);
+  };
+
   return (
     <main className="min-h-screen relative bg-[var(--background)]">
       <Navbar />
@@ -66,14 +85,19 @@ export default function Home() {
           <p className="text-base md:text-lg mb-8 font-medium text-[var(--text-secondary)]">
             10% off your first order. New limited flavors drop monthly.
           </p>
-          <form className="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
+          <form className="max-w-sm mx-auto flex flex-col sm:flex-row gap-3" onSubmit={handleNewsletterSubmit}>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Your email..."
               className="flex-1 px-5 py-4 rounded-xl outline-none font-medium text-sm transition-colors bg-[var(--chip-bg)] border border-[var(--chip-border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
             />
-            <button className="px-8 py-4 font-brand font-black rounded-xl text-sm uppercase tracking-widest transition-transform hover:scale-105 bg-[var(--cta-primary-bg)] text-[var(--cta-primary-text)]">
-              Join
+            <button
+              disabled={isSubscribing}
+              className="px-8 py-4 font-brand font-black rounded-xl text-sm uppercase tracking-widest transition-transform hover:scale-105 bg-[var(--cta-primary-bg)] text-[var(--cta-primary-text)] disabled:opacity-50"
+            >
+              {isSubscribing ? "Joining..." : "Join"}
             </button>
           </form>
         </div>

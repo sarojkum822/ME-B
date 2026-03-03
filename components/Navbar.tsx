@@ -7,12 +7,13 @@ import { ShoppingCart, ShoppingBag, Heart, User, LogIn, UserPlus, ChevronDown, S
 import { useTheme } from "@/context/ThemeContext";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCTS } from "@/lib/products";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -89,7 +90,6 @@ export default function Navbar() {
           {/* Desktop Nav - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-2 order-2">
             {[
-              { name: "🔥 New Drop", href: "/shop" },
               { name: "Shop", href: "/shop" },
               { name: "About", href: "/our-story" },
               { name: "Track Order", href: "/account/orders" },
@@ -401,7 +401,6 @@ export default function Navbar() {
                 <h3 className="text-[9px] font-black text-stone-400 uppercase tracking-[0.15em] mb-2">Explore</h3>
                 <div className="space-y-1">
                   {[
-                    { name: "🔥 New Drop", icon: <Star size={16} />, href: "/shop" },
                     { name: "Shop", icon: <ShoppingBag size={16} />, href: "/shop" },
                     { name: "About", icon: <BookOpen size={16} />, href: "/our-story" },
                     { name: "Track Order", icon: <Hash size={16} />, href: "/account/orders" }
@@ -455,7 +454,16 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-8">
-                <div className="relative flex items-center mb-8">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (searchQuery.trim()) {
+                      setIsSearchOpen(false);
+                      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                    }
+                  }}
+                  className="relative flex items-center mb-8"
+                >
                   <Search className="absolute left-6 text-stone-400" size={24} />
                   <input
                     autoFocus
@@ -466,17 +474,29 @@ export default function Navbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <button
+                    type="button"
                     onClick={() => setIsSearchOpen(false)}
                     className="absolute right-6 p-2 text-stone-400 hover:text-lava-orange transition-colors"
                   >
                     Esc
                   </button>
-                </div>
+                </form>
 
                 <div className="space-y-6">
-                  <h3 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em]">
-                    {searchQuery ? "Search Results" : "Popular Flavors"}
-                  </h3>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em]">
+                      {searchQuery ? "Search Results" : "Popular Flavors"}
+                    </h3>
+                    {searchQuery && (
+                      <Link
+                        href={`/search?q=${encodeURIComponent(searchQuery)}`}
+                        onClick={() => setIsSearchOpen(false)}
+                        className="text-[10px] font-black text-lava-orange uppercase tracking-[0.1em] hover:underline"
+                      >
+                        View All
+                      </Link>
+                    )}
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {searchResults.map((product) => (
                       <Link

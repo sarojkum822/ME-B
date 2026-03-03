@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,13 +8,28 @@ import ProductFilters from "@/components/ProductFilters";
 import ProductGrid from "@/components/ProductGrid";
 import { ChevronRight, Filter, ArrowUpDown, X, Check } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
+import { useSearchParams } from "next/navigation";
 
 export default function ShopPage() {
-    const filteredProductsCount = PRODUCTS.length;
-    const [activeFilter, setActiveFilter] = useState("all");
-    const [activeSort, setActiveSort] = useState("popularity");
+    const searchParams = useSearchParams();
+    const filterParam = searchParams.get("filter");
+    const sortParam = searchParams.get("sort");
+
+    const [activeFilter, setActiveFilter] = useState(filterParam || "all");
+    const [activeSort, setActiveSort] = useState(sortParam || "newest");
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isSortOpen, setIsSortOpen] = useState(false);
+
+    useEffect(() => {
+        if (filterParam) setActiveFilter(filterParam);
+        if (sortParam) setActiveSort(sortParam);
+    }, [filterParam, sortParam]);
+
+    const filteredProductsCount = activeFilter === "all"
+        ? PRODUCTS.length
+        : activeFilter === "new"
+            ? PRODUCTS.filter(p => p.label === "NEW").length
+            : PRODUCTS.filter(p => p.category === activeFilter).length;
 
     return (
         <main className="min-h-screen bg-snack-white dark:bg-stone-950 text-foreground transition-colors relative overflow-hidden">
@@ -51,7 +66,8 @@ export default function ShopPage() {
                             <div className="hidden lg:block border-b border-card-border">
                                 <div className="px-6 pt-6 pb-2">
                                     <h1 className="text-lg font-brand font-black uppercase tracking-tight text-stone-900 dark:text-white">
-                                        All Cravings <span className="text-[12px] font-bold text-stone-400 ml-2 tracking-widest uppercase">(Showing {filteredProductsCount} Flavors)</span>
+                                        {activeFilter === "new" ? "New Arrivals" : "All Cravings"}
+                                        <span className="text-[12px] font-bold text-stone-400 ml-2 tracking-widest uppercase">(Showing {filteredProductsCount} Flavors)</span>
                                     </h1>
                                 </div>
                                 <div className="flex items-center gap-8 px-6 py-3 text-sm">
@@ -99,7 +115,7 @@ export default function ShopPage() {
 
                             {/* Grid wrapper */}
                             <div className="p-2 lg:p-4">
-                                <ProductGrid filter={activeFilter} isShopPage />
+                                <ProductGrid filter={activeFilter} sort={activeSort} isShopPage />
                             </div>
                         </div>
                     </div>

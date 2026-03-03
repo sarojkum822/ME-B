@@ -8,6 +8,9 @@ import Footer from "@/components/Footer";
 import { getProductById, getRelatedProducts, Product } from "@/lib/products";
 import { Heart, ShoppingBag, Truck, Shield, RotateCcw, ChevronDown, ChevronUp, Star, Minus, Plus, MapPin, Tag, Check } from "lucide-react";
 import { ShippingIcon, AuthenticIcon, ReturnIcon } from "@/components/BrandTrustIcons";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useToast } from "@/context/ToastContext";
 
 interface ProductPageClientProps {
     productId: number;
@@ -16,10 +19,13 @@ interface ProductPageClientProps {
 export default function ProductPageClient({ productId }: ProductPageClientProps) {
     const product = getProductById(productId);
     const relatedProducts = getRelatedProducts(productId);
+    const { addToCart } = useCart();
+    const { toggleWishlist, isInWishlist } = useWishlist();
+    const { showToast } = useToast();
 
     const [selectedImage, setSelectedImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
-    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState(false); // We'll sync this with WishlistContext
     const [showAllOffers, setShowAllOffers] = useState(false);
     const [pincode, setPincode] = useState("");
     const [pincodeChecked, setPincodeChecked] = useState(false);
@@ -42,13 +48,24 @@ export default function ProductPageClient({ productId }: ProductPageClientProps)
     }
 
     const handleAddToCart = () => {
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            img: product.image,
+            color: product.color
+        });
         setAddedToCart(true);
+        showToast(`${product.name} added to cart!`, "success");
         setTimeout(() => setAddedToCart(false), 2000);
     };
 
     const handlePincodeCheck = () => {
         if (pincode.length === 6) {
             setPincodeChecked(true);
+            showToast("Delivery is available for your location!", "info");
+        } else {
+            showToast("Please enter a valid 6-digit pincode.", "error");
         }
     };
 
@@ -264,14 +281,19 @@ export default function ProductPageClient({ productId }: ProductPageClientProps)
                                     )}
                                 </button>
                                 <button
-                                    onClick={() => setIsWishlisted(!isWishlisted)}
-                                    className={`py-4 px-6 rounded-2xl font-brand font-bold uppercase text-sm border flex items-center justify-center gap-2 transition-all ${isWishlisted
+                                    onClick={() => {
+                                        toggleWishlist(product.id);
+                                        if (!isInWishlist(product.id)) {
+                                            showToast(`${product.name} saved to wishlist!`, "success");
+                                        }
+                                    }}
+                                    className={`py-4 px-6 rounded-2xl font-brand font-bold uppercase text-sm border flex items-center justify-center gap-2 transition-all ${isInWishlist(product.id)
                                         ? 'bg-pink-50 dark:bg-pink-900/20 border-pink-500 text-pink-500'
                                         : 'border-card-border text-stone-500 hover:border-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
                                         }`}
                                 >
-                                    <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />
-                                    {isWishlisted ? 'Saved' : 'Wishlist'}
+                                    <Heart size={20} className={isInWishlist(product.id) ? 'fill-current' : ''} />
+                                    {isInWishlist(product.id) ? 'Saved' : 'Wishlist'}
                                 </button>
                             </div>
 

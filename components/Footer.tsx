@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Instagram, Twitter, MessageCircle, Linkedin } from "lucide-react";
+import { useToast } from "@/context/ToastContext";
 
 const SOCIAL_LINKS = [
     { Icon: Instagram, href: "https://instagram.com/mithilaessence", label: "Instagram" },
@@ -11,6 +12,7 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Footer() {
+    const { showToast } = useToast();
     return (
         <footer className="bg-[#1E1E1E] text-white pt-10 md:pt-16 pb-6 md:pb-12 px-6 md:px-12 lg:px-20 border-t border-white/10">
             <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-8 md:gap-y-12 gap-x-8 mb-10 md:mb-16">
@@ -59,8 +61,8 @@ export default function Footer() {
                     <ul className="space-y-3.5 text-[var(--muted-foreground)] font-sans font-medium text-xs md:text-sm">
                         <li><Link href="/our-story" className="hover:text-[var(--cream)] transition-colors">Our Story</Link></li>
                         <li><Link href="/sustainability" className="hover:text-[var(--cream)] transition-colors">Sustainability</Link></li>
-                        <li><Link href="/contact" className="hover:text-[var(--cream)] transition-colors">Careers</Link></li>
-                        <li><Link href="/contact" className="hover:text-[var(--cream)] transition-colors">Newsroom</Link></li>
+                        <li><button onClick={() => showToast("Careers page coming soon!", "info")} className="hover:text-[var(--cream)] transition-colors text-left">Careers</button></li>
+                        <li><button onClick={() => showToast("Newsroom coming soon!", "info")} className="hover:text-[var(--cream)] transition-colors text-left">Newsroom</button></li>
                     </ul>
                 </div>
             </div>

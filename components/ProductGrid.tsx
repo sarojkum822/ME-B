@@ -4,32 +4,65 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PRODUCTS } from "@/lib/products";
-import { Star, Heart, ShoppingBag } from "lucide-react";
+import { Star, Heart, ShoppingBag, Check } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
+import { useCart } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 
 interface ProductGridProps {
     filter?: string;
+    sort?: string;
     isShopPage?: boolean;
 }
 
-export default function ProductGrid({ filter = "all", isShopPage = false }: ProductGridProps) {
+export default function ProductGrid({ filter = "all", sort = "default", isShopPage = false }: ProductGridProps) {
     const { isInWishlist, toggleWishlist } = useWishlist();
-    const [sortBy, setSortBy] = useState<"default" | "price-low" | "price-high" | "rating">("default");
+    const { addToCart } = useCart();
+    const { showToast } = useToast();
+    const [internalSortBy, setInternalSortBy] = useState<"default" | "price-low" | "price-high" | "rating">("default");
+
+    const sortBy = isShopPage ? sort : internalSortBy;
+    const setSortBy = (val: any) => {
+        if (!isShopPage) setInternalSortBy(val);
+    };
+    const [addedId, setAddedId] = useState<number | null>(null);
 
     const filteredProducts = (filter === "all"
         ? PRODUCTS
-        : PRODUCTS.filter(p => p.category === filter || p.category === "all"))
+        : filter === "new"
+            ? PRODUCTS.filter(p => p.label === "NEW")
+            : PRODUCTS.filter(p => p.category === filter || p.category === "all"))
         .sort((a, b) => {
-            if (sortBy === "price-low") return a.price - b.price;
-            if (sortBy === "price-high") return b.price - a.price;
+            if (sortBy === "price-low" || sortBy === "price-low") return a.price - b.price;
+            if (sortBy === "price-high" || sortBy === "price-high") return b.price - a.price;
             if (sortBy === "rating") return b.rating - a.rating;
+            if (sortBy === "newest" || sortBy === "default") return b.id - a.id; // Using ID as proxy for newest
             return 0;
         });
 
     const handleWishlistToggle = (e: React.MouseEvent, productId: number) => {
         e.preventDefault();
         e.stopPropagation();
+        const product = PRODUCTS.find(p => p.id === productId);
         toggleWishlist(productId);
+        if (!isInWishlist(productId)) {
+            showToast(`${product?.name} added to wishlist!`, "success");
+        }
+    };
+
+    const handleQuickAdd = (e: React.MouseEvent, product: typeof PRODUCTS[0]) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            img: product.image,
+            color: product.color
+        });
+        setAddedId(product.id);
+        showToast(`${product.name} added to cart!`, "success");
+        setTimeout(() => setAddedId(null), 2000);
     };
 
     return (
@@ -84,14 +117,23 @@ export default function ProductGrid({ filter = "all", isShopPage = false }: Prod
                             {/* Quick Add Overlay - Desktop Only */}
                             <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out hidden lg:block">
                                 <button
-                                    className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-3 rounded-xl font-brand font-bold text-xs flex items-center justify-center gap-2 shadow-xl hover:bg-lava-orange dark:hover:bg-lava-orange hover:text-white transition-colors"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        // Logic for quick add would go here
-                                    }}
+                                    className={`w-full py-3 rounded-xl font-brand font-bold text-xs flex items-center justify-center gap-2 shadow-xl transition-all ${addedId === product.id
+                                        ? "bg-green-600 text-white"
+                                        : "bg-stone-900 text-white dark:bg-white dark:text-stone-900 hover:bg-lava-orange dark:hover:bg-lava-orange hover:text-white"
+                                        }`}
+                                    onClick={(e) => handleQuickAdd(e, product)}
                                 >
-                                    <ShoppingBag size={14} />
-                                    QUICK ADD
+                                    {addedId === product.id ? (
+                                        <>
+                                            <Check size={14} />
+                                            ADDED!
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ShoppingBag size={14} />
+                                            QUICK ADD
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>

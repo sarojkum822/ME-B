@@ -20,6 +20,8 @@ interface CartContextType {
     cartCount: number;
     cartTotal: number;
     lastAddedId: number | null;
+    appliedPromo: { code: string; discount: number } | null;
+    setPromo: (code: string | null, discount?: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -31,16 +33,25 @@ const INITIAL_CART: CartItem[] = [
 export function CartProvider({ children }: { children: ReactNode }) {
     const [cartItems, setCartItems] = useState<CartItem[]>(INITIAL_CART);
     const [lastAddedId, setLastAddedId] = useState<number | null>(null);
+    const [appliedPromo, setAppliedPromo] = useState<{ code: string; discount: number } | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // Load from local storage on mount
     useEffect(() => {
         const savedCart = localStorage.getItem("cart");
+        const savedPromo = localStorage.getItem("appliedPromo");
         if (savedCart) {
             try {
                 setCartItems(JSON.parse(savedCart));
             } catch (e) {
                 console.error("Failed to parse cart from local storage", e);
+            }
+        }
+        if (savedPromo) {
+            try {
+                setAppliedPromo(JSON.parse(savedPromo));
+            } catch (e) {
+                console.error("Failed to parse promo from local storage", e);
             }
         }
         setIsLoaded(true);
@@ -50,8 +61,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         if (isLoaded) {
             localStorage.setItem("cart", JSON.stringify(cartItems));
+            localStorage.setItem("appliedPromo", JSON.stringify(appliedPromo));
         }
-    }, [cartItems, isLoaded]);
+    }, [cartItems, appliedPromo, isLoaded]);
 
     const addToCart = (newItem: Omit<CartItem, "qty">) => {
         setCartItems((prev) => {
@@ -84,6 +96,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const clearCart = () => {
         setCartItems([]);
+        setAppliedPromo(null);
+    };
+
+    const setPromo = (code: string | null, discount: number = 0) => {
+        if (!code) {
+            setAppliedPromo(null);
+        } else {
+            setAppliedPromo({ code, discount });
+        }
     };
 
     const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
@@ -100,6 +121,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 cartCount,
                 cartTotal,
                 lastAddedId,
+                appliedPromo,
+                setPromo,
             }}
         >
             {children}

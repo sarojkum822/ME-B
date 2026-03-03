@@ -59,6 +59,10 @@
   --section-light: hsl(var(--background));
   --section-white: #FFFFFF;
   --section-earthy: hsl(var(--muted));
+
+  /* Card and Components */
+  --card-bg: #FFFFFF;
+  --card-border: hsl(var(--muted-foreground) / 0.15);
 }
 
 /* Dark Mode (Craving Zone) */
@@ -133,6 +137,12 @@
   --bg-glass: rgba(255, 255, 255, 0.45);
   --bg-glass-dark: rgba(17, 19, 24, 0.45);
   --glass-blur: 24px;
+
+  /* Brand Colors */
+  --color-lava-orange: #FF6B35;
+  --color-mint-teal: #00A896;
+  --color-sun-yellow: #FED766;
+  --color-snack-white: #F4F1DE;
 }
 
 @layer utilities {
