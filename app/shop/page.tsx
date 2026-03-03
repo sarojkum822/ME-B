@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,7 +10,7 @@ import { ChevronRight, Filter, ArrowUpDown, X, Check } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { useSearchParams } from "next/navigation";
 
-export default function ShopPage() {
+function ShopContent() {
     const searchParams = useSearchParams();
     const filterParam = searchParams.get("filter");
     const sortParam = searchParams.get("sort");
@@ -189,3 +189,16 @@ export default function ShopPage() {
         </main>
     );
 }
+
+export default function ShopPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-snack-white dark:bg-stone-950 flex items-center justify-center">
+                <div className="animate-pulse text-lava-orange font-brand font-black text-2xl uppercase tracking-widest">Loading Cravings...</div>
+            </div>
+        }>
+            <ShopContent />
+        </Suspense>
+    );
+}
+
